@@ -1,0 +1,6 @@
+@BrcDomaApi_HostAddress = http://localhost:5113
+
+GET {{BrcDomaApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###

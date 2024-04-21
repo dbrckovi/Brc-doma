@@ -46,6 +46,11 @@
       return File.ReadAllText(ConstructFilePath(fileName));
     }
 
+    public bool FileExists(string fileName)
+    {
+      return File.Exists(ConstructFilePath(fileName));
+    }
+
     /// <summary>
     /// Writes a content to a file name
     /// </summary>
@@ -53,6 +58,7 @@
     /// <param name="content"></param>
     public void WriteContent(string filename, string content)
     {
+      if (string.IsNullOrEmpty(filename)) throw new Exception("Filename may not be empty");
       if (string.IsNullOrEmpty(content)) content = "";
       string filePath = ConstructFilePath(filename);
       if (File.Exists(filePath)) File.Delete(filePath);

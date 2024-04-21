@@ -32,14 +32,13 @@ namespace BrcDomaApi.Controllers
     /// <param name="id"></param>
     /// <returns></returns>
     [HttpGet("{id}")]
-    public TextBlock Get(string id)
+    public IActionResult Get(string id)
     {
-      try
-      {
-        string content = _fileDatabase.ReadContent(id);
-        return new TextBlock() { Id = id, Text = content };
-      }
-      catch { return null; }
+      if (string.IsNullOrEmpty(id)) return BadRequest("'id' is not specified");
+      if (!_fileDatabase.FileExists(id)) return NotFound($"'{id}' does not exist");
+
+      string content = _fileDatabase.ReadContent(id);
+      return Ok(new TextBlock() { Id = id, Text = content });
     }
 
     /// <summary>
@@ -47,9 +46,18 @@ namespace BrcDomaApi.Controllers
     /// </summary>
     /// <param name="value"></param>
     [HttpPost]
-    public void Post([FromBody] TextBlock value)
+    public IActionResult Post([FromBody] TextBlock value)
     {
-      _fileDatabase.WriteContent(value.Id, value.Text);
+      try
+      {
+        if (string.IsNullOrEmpty(value.Id)) throw new Exception("'Id' may not be empty");
+        _fileDatabase.WriteContent(value.Id, value.Text);
+        return Ok();
+      }
+      catch (Exception ex)
+      {
+        return BadRequest(ex.Message);
+      }
     }
 
     /// <summary>
@@ -57,9 +65,12 @@ namespace BrcDomaApi.Controllers
     /// </summary>
     /// <param name="id"></param>
     [HttpDelete("{id}")]
-    public void Delete(string id)
+    public IActionResult Delete(string id)
     {
+      if (string.IsNullOrEmpty(id)) return BadRequest("'id' is not specified");
+      if (!_fileDatabase.FileExists(id)) return NotFound($"'{id}' does not exist");
       _fileDatabase.DeleteFile(id);
+      return Ok();
     }
   }
 }

@@ -1,0 +1,39 @@
+﻿@page "/lists"
+@inject HttpClient Http
+
+<PageTitle>Lists</PageTitle>
+<h1>Lists</h1>
+
+<button>Vla</button>
+
+@* @if (listTitles != null)
+{
+  foreach (string title in listTitles)
+  {
+    <button>@title</button>
+  }
+}
+ *@
+@code {
+
+  // private List<string> listTitles;
+
+  // protected override async Task OnInitializedAsync()
+  // {
+  //   //listTitles = await Http.GetFromJsonAsync<List<string>>("http://localhost:5113/api/TextBlock");
+  
+  //   var response = await Http.GetAsync("http://localhost:5113/api/TextBlock");
+  //   if (response.IsSuccessStatusCode)
+  //   {
+  //     var content = await response.Content.ReadAsStringAsync();
+  //     //listTitles = JsonSerializer.Deserialize<List<string>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
+  //   }
+  //   else
+  //   {
+  //     // Handle error
+  //     // For now, just initialize listTitles to an empty list
+  //     listTitles = new List<string>();
+  //   }
+  // }
+
+}

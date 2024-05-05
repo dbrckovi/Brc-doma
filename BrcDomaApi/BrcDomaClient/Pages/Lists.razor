@@ -4,36 +4,33 @@
 <PageTitle>Lists</PageTitle>
 <h1>Lists</h1>
 
-<button>Vla</button>
+@* <button class="btn btn-primary" @onclick=Test>Vla</button> *@
 
-@* @if (listTitles != null)
+@foreach (string title in blocks)
 {
-  foreach (string title in listTitles)
-  {
-    <button>@title</button>
-  }
+  <button class="btn btn-primary" @onclick="() => BlockButton_Clicked(title)">@title</button>
 }
- *@
+
+<p>@debugText</p>
+
 @code {
 
-  // private List<string> listTitles;
+  private List<string> blocks = new List<string>();
+  private string debugText = "";
 
-  // protected override async Task OnInitializedAsync()
-  // {
-  //   //listTitles = await Http.GetFromJsonAsync<List<string>>("http://localhost:5113/api/TextBlock");
-  
-  //   var response = await Http.GetAsync("http://localhost:5113/api/TextBlock");
-  //   if (response.IsSuccessStatusCode)
-  //   {
-  //     var content = await response.Content.ReadAsStringAsync();
-  //     //listTitles = JsonSerializer.Deserialize<List<string>>(content, new JsonSerializerOptions { PropertyNameCaseInsensitive = true });
-  //   }
-  //   else
-  //   {
-  //     // Handle error
-  //     // For now, just initialize listTitles to an empty list
-  //     listTitles = new List<string>();
-  //   }
-  // }
+  protected override async Task OnInitializedAsync()
+  {
+    blocks = await Http.GetFromJsonAsync<List<string>>("api/TextBlock");
+  }
 
+  private async Task BlockButton_Clicked(string title)
+  {
+    HttpResponseMessage response = await Http.GetAsync($"api/TextBlock/{title}");
+
+    if (response.IsSuccessStatusCode)
+    {
+      debugText = await response.Content.ReadAsStringAsync();
+    }
+    else debugText = $"Error: {response.StatusCode}, {response.ReasonPhrase}";
+  }
 }

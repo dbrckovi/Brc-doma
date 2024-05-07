@@ -1,0 +1,55 @@
+﻿@using BrcDomaClient.Models
+@inject HttpClient http
+
+<style>
+  .full-height-textarea {
+    height: calc(100vh - 200px); /* Adjust 200px according to your layout */
+    width: 100%;
+    resize: vertical;
+    overflow-y: auto;
+  }
+</style>
+
+<br />
+<br />
+<textarea class="full-height-textarea" @bind="@Content"></textarea>
+
+@code {
+  private string _name;
+  private string _content;
+  private bool _loaded = false;
+
+  [Parameter]
+  public string Name
+  {
+    get { return _name; }
+    set => SetNameAsync(value);
+  }
+
+  private string Content
+  {
+    get { return _content; }
+    set => SetContentAsync(value);
+  }
+
+  private async Task SetNameAsync(string value)
+  {
+    _loaded = false;
+    _name = value;
+    TextBlock block = await http.GetFromJsonAsync<TextBlock>($"api/TextBlock/{_name}");
+    Content = block.Text;
+    _loaded = true;
+    StateHasChanged();
+  }
+
+  private async Task SetContentAsync(string value)
+  {
+    _content = value;
+    StateHasChanged();
+    if (_loaded)
+    {
+      TextBlock block = new TextBlock() { Id = _name, Text = _content };
+      await http.PostAsJsonAsync<TextBlock>($"api/TextBlock", block);
+    }
+  }
+}

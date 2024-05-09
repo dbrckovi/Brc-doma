@@ -14,7 +14,7 @@ namespace BrcDomaClient
       builder.Services.AddScoped(sp =>
         new HttpClient
         {
-          BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "https://localhost:7293")
+          BaseAddress = new Uri(builder.Configuration["FrontendUrl"] ?? "http://www.brc-doma.duckdns.org:81")
         });
 
       await builder.Build().RunAsync();

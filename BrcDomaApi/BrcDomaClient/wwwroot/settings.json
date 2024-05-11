@@ -1,3 +1,3 @@
 {
-  "apiBasePath": "http://www.brc-doma.duckdns.org:81"
+  "ApiBasePath": "https://localhost:7293"
 }

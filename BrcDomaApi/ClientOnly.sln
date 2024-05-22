@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BrcDomaClient", "BrcDomaClient\BrcDomaClient.csproj", "{A3028770-F67C-43F9-9006-4FD128BCB0AD}"
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedModels", "SharedModels\SharedModels.shproj", "{9C96984B-40F6-49DB-8E3B-E464DF94B871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6261E2C-C8BF-4290-9713-EBB434291D01}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedModels\SharedModels.projitems*{9c96984b-40f6-49db-8e3b-e464df94b871}*SharedItemsImports = 13
+		SharedModels\SharedModels.projitems*{a3028770-f67c-43f9-9006-4fd128bcb0ad}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

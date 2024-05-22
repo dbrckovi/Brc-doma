@@ -1,4 +1,4 @@
-﻿namespace BrcDomaClient.Models
+﻿namespace SharedModels
 {
   public class TextBlock
   {

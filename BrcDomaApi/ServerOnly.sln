@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		.editorconfig = .editorconfig
 	EndProjectSection
 EndProject
+Project("{D954291E-2A0B-460D-934E-DC6B0785DB48}") = "SharedModels", "SharedModels\SharedModels.shproj", "{9C96984B-40F6-49DB-8E3B-E464DF94B871}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -26,5 +28,9 @@ Global
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {C6261E2C-C8BF-4290-9713-EBB434291D01}
+	EndGlobalSection
+	GlobalSection(SharedMSBuildProjectFiles) = preSolution
+		SharedModels\SharedModels.projitems*{9c96984b-40f6-49db-8e3b-e464df94b871}*SharedItemsImports = 13
+		SharedModels\SharedModels.projitems*{c37045ca-2beb-4650-8dcd-7fbb408b6449}*SharedItemsImports = 5
 	EndGlobalSection
 EndGlobal

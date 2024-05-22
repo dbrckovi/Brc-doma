@@ -1,30 +1,27 @@
 ﻿@page "/lists"
 @inject HttpClient http
-@inject Settings settings
 
 <PageTitle>Lists</PageTitle>
 <h1>Lists</h1>
 
-@foreach (string title in _allBlocks)
+@foreach (string title in _allLists)
 {
   <button class="btn btn-primary" @onclick="() => BlockButton_Clicked(title)">@title</button>
 }
 
 <button class="btn btn-link">New...</button>
 
-<TextblockEditor Name="@_currentBlockName"></TextblockEditor>
-
 @code {
-  private List<string> _allBlocks = new List<string>();
-  private string _currentBlockName = "";
+  private List<string> _allLists = new List<string>();
+  private string _currentListName = "";
 
   protected override async Task OnInitializedAsync()
   {
-    _allBlocks = await http.GetFromJsonAsync<List<string>>("api/TextBlock");
+    _allLists = await http.GetFromJsonAsync<List<string>>("api/List");
   }
 
   private async Task BlockButton_Clicked(string title)
   {
-    _currentBlockName = title;
+    _currentListName = title;
   }
 }

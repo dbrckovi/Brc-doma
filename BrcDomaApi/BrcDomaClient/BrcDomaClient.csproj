@@ -20,10 +20,6 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
   <Import Project="..\SharedModels\SharedModels.projitems" Label="Shared" />
 
 </Project>

@@ -2,3 +2,6 @@
 bin
 obj
 *.user
+dist
+node_modules
+.vscode

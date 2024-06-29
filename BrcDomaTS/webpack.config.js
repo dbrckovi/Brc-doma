@@ -1,5 +1,6 @@
 const path = require('path')
 const HtmlWebpackPlugin = require('html-webpack-plugin')
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 const webpack = require('webpack')
 const pkg = require('./package.json')
 
@@ -31,7 +32,7 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.css$/i,
-                    use: ['style-loader', 'css-loader'],
+                    use: [MiniCssExtractPlugin.loader, 'css-loader'],
                 },
             ],
         },
@@ -40,6 +41,7 @@ module.exports = (env, argv) => {
         },
         plugins: [
             new HtmlWebpackPlugin({template: './index.html'}),
+            new MiniCssExtractPlugin(),
             // Take useful info from build and make it accessible on frontend
             new webpack.DefinePlugin({
                 'process.env.VERSION': JSON.stringify(pkg.version),

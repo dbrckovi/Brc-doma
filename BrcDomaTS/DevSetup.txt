@@ -1,0 +1,5 @@
+To setup dev environment, do this:
+ - Install VS Code
+ - Install node with typescript compiler
+ - Install 'Live Server' extension
+ - Open Index.html in live server

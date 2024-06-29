@@ -1,10 +1,15 @@
-import { MainMenu } from './components/mainMenu.js';
-import { ListsPage } from './components/lists_page.js';
+import { MainMenu } from 'components/mainMenu';
+import { ListsPage } from 'components/lists_page';
+import { version, mode, PAGE_ID_TEXTS,PAGE_ID_LISTS } from 'global';
+import 'styles/styles.css';
+
+// FIXME - importing global stuff
+console.log(`Global: ${PAGE_ID_TEXTS} ${PAGE_ID_LISTS} ${version} ${mode}`);
 
 let selectedButtonID: string | null = null;
 
 //Load event
-document.addEventListener('DOMContentLoaded', () => 
+document.addEventListener('DOMContentLoaded', () =>
 {
   createMainMenu();
 });
@@ -14,7 +19,7 @@ function createMainMenu()
 {
   const mainMenuContainer = document.getElementById('main-menu');
 
-  if (mainMenuContainer) 
+  if (mainMenuContainer)
   {
     const mainMenu = new MainMenu(mainMenuContainer, mainMenu_ModuleChanged);
     mainMenu.render();
@@ -24,7 +29,7 @@ function createMainMenu()
 }
 
 //fired when selected moude is changed
-function mainMenu_ModuleChanged(module: string) 
+function mainMenu_ModuleChanged(module: string)
 {
   if (selectedButtonID)
   {

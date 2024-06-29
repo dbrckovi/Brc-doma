@@ -1,5 +1,5 @@
-declare var PAGE_ID_LISTS: string;
-declare var PAGE_ID_TEXTS: string;
+export const version = process.env.VERSION as string
+export const mode = process.env.MODE as 'development' | 'production'
 
-PAGE_ID_LISTS = 'lists';
-PAGE_ID_TEXTS = 'texts';
+export const PAGE_ID_LISTS = 'lists';
+export const PAGE_ID_TEXTS = 'texts';

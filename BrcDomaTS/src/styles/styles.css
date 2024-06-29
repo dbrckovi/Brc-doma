@@ -1,3 +1,5 @@
+@import "some-style-module.css";
+
 html, body {
   height: 100%;
   margin: 0;
@@ -11,9 +13,9 @@ html, body {
 }
 
 #left-panel {
-  width: 150px; 
+  width: 150px;
   background-color: rgb(10, 15, 24);
-  padding: 10px; 
+  padding: 10px;
 }
 
 #title-panel {

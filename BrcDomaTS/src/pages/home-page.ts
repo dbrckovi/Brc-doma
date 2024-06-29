@@ -1,9 +1,10 @@
 import { MainMenu } from 'components/mainMenu';
 import { ListsPage } from 'components/lists_page';
 import { version, mode, PAGE_ID_TEXTS,PAGE_ID_LISTS } from 'global';
-import 'styles/styles.css';
+import 'styles/home-page.css'
 
 // FIXME - importing global stuff
+console.log('this script is loaded inside home page')
 console.log(`Global: ${PAGE_ID_TEXTS} ${PAGE_ID_LISTS} ${version} ${mode}`);
 
 let selectedButtonID: string | null = null;

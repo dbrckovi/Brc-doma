@@ -9,7 +9,10 @@ module.exports = (env, argv) => {
 
     return {
         mode,
-        entry: './src/index.ts',
+        entry: {
+            homePage: './src/pages/home-page.ts',
+            samplePage: './src/pages/sample-page.ts'
+        },
         output: {
             filename: '[name].[contenthash].js',
             path: path.resolve(__dirname, 'dist'),
@@ -32,7 +35,15 @@ module.exports = (env, argv) => {
                 },
                 {
                     test: /\.css$/i,
-                    use: [MiniCssExtractPlugin.loader, 'css-loader'],
+                    use: [MiniCssExtractPlugin.loader, 'css-loader']
+                },
+                {
+                    test: /\.(png|jpg|gif|xml)$/i,
+                    type: 'asset/resource'
+                },
+                {
+                    test: /\.(woff|woff2|eot|ttf|otf)$/i,
+                    type: 'asset/resource',
                 },
             ],
         },
@@ -40,8 +51,21 @@ module.exports = (env, argv) => {
             port: 8080
         },
         plugins: [
-            new HtmlWebpackPlugin({template: './index.html'}),
-            new MiniCssExtractPlugin(),
+            new MiniCssExtractPlugin({
+                filename: '[name].[contenthash].css',
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'index.html',
+                title: "Control Panel",
+                template: './templates/home-page.html',
+                chunks: ['homePage']
+            }),
+            new HtmlWebpackPlugin({
+                filename: 'sample.html',
+                title: "Sample Page",
+                template: './templates/sample-page.html',
+                chunks: ['samplePage']
+            }),
             // Take useful info from build and make it accessible on frontend
             new webpack.DefinePlugin({
                 'process.env.VERSION': JSON.stringify(pkg.version),

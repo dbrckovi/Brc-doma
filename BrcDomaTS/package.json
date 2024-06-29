@@ -2,8 +2,8 @@
   "name": "brc-doma",
   "version": "0.0.0",
   "scripts": {
-    "build": "webpack",
-    "serve": "webpack serve --mode=development"
+    "build": "webpack --stats-children",
+    "serve": "webpack serve --mode=development "
   },
   "devDependencies": {
     "css-loader": "^7.1.2",

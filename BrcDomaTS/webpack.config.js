@@ -9,6 +9,7 @@ module.exports = (env, argv) => {
 
     return {
         mode,
+        devtool: 'inline-source-map',
         entry: {
             homePage: './src/pages/home-page.ts',
             samplePage: './src/pages/sample-page.ts'

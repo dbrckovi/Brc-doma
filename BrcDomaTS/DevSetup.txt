@@ -4,7 +4,4 @@ To setup dev environment, do this:
  - Install 'Live Server' extension
  - Open Index.html in live server
 
-
-
-    "build": "webpack --stats-children",
-    "serve": "webpack serve --mode=development "
+npm run serve

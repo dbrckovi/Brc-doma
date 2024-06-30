@@ -1,3 +1,5 @@
+import { API_URL } from "global";
+
 export class ListsPage {
     constructor(private container: HTMLElement) {}
 

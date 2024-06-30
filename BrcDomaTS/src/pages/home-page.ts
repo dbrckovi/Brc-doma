@@ -2,6 +2,7 @@ import { MainMenu } from 'components/mainMenu';
 import { ListsPage } from 'components/lists_page';
 import { version, mode, PAGE_ID_TEXTS,PAGE_ID_LISTS } from 'global';
 import 'styles/home-page.css'
+import { TextsPage } from 'components/texts_page';
 
 // FIXME - importing global stuff
 console.log('this script is loaded inside home page')
@@ -56,9 +57,11 @@ function showModule(module: string)
       case PAGE_ID_LISTS :
         const listsPage = new ListsPage(contentContainer);
         listsPage.render();
+        break;
         case PAGE_ID_TEXTS :
-          const textsPage = new ListsPage(contentContainer);
-          textsPage.render();
+        const textsPage = new TextsPage(contentContainer);
+        textsPage.render();
+        break;
     }
     console.log(module);
   }

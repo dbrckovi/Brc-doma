@@ -5,8 +5,8 @@ export class MainMenu {
 
     render() {
         const menuItems = [
-            { name: 'List', id: PAGE_ID_LISTS, disabled: false },
             { name: 'Texts', id: PAGE_ID_TEXTS, disabled: false },
+            { name: 'List', id: PAGE_ID_LISTS, disabled: false },
             { name: 'Devices', id: PAGE_ID_DEVICES, disabled: true},
             { name: 'Light Control', id: PAGE_ID_LISTS, disabled: true },
             { name: 'Music Control', id: PAGE_ID_MUSIC_CONTROL, disabled: true },

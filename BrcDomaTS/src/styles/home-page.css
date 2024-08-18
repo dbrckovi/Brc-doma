@@ -67,3 +67,33 @@ html, body {
   padding: 3px;
   margin-left: 3px;
 }
+
+.fill_remaining_space {
+  width: 100%;
+  min-height: 100px; /* Set a minimum height */
+  resize: none; /* Prevent manual resizing */
+  padding: 10px;
+  box-sizing: border-box; /* Include padding in the width/height calculations */
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
+  border: 1px solid #ccc;
+}
+
+#vertical-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Fill the entire #content area */
+}
+
+/* Button container to keep buttons in a row */
+#button-container {
+  display: flex;
+  gap: 10px; /* Optional: Adds space between buttons */
+  margin-bottom: 10px; /* Space between buttons and textarea */
+}
+
+/* Textarea container to allow textarea to fill remaining space */
+#textarea-container {
+  flex-grow: 1; /* Make this container fill the remaining space */
+  display: flex;
+}

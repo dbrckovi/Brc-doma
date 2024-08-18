@@ -2,15 +2,29 @@ import { API_URL } from "global";
 import { getStringList, makeGetRequest } from "api/api";
 
 let selectedButton: HTMLButtonElement | null = null;
+let textBox: HTMLTextAreaElement | null = null;
 
 export class TextsPage {
     constructor(private container: HTMLElement) { }
 
     async render() {
+
+        const verticalContainer = document.createElement("div");
+        verticalContainer.id = "vertical-container";
+        this.container.appendChild(verticalContainer);
+
+        const buttonContainer = document.createElement("div");
+        buttonContainer.id = "button-container";
+        verticalContainer.appendChild(buttonContainer);
+
+        const textareaContainer = document.createElement("div");
+        textareaContainer.id = "textarea-container";
+        verticalContainer.appendChild(textareaContainer);
+
         selectedButton = null;
         const title = document.createElement("label");
         title.textContent = "Texts";
-        this.container.appendChild(title);
+        buttonContainer.appendChild(title);
 
         try {
             let items: string[] = await getStringList(API_URL + "/api/TextBlock");
@@ -21,10 +35,14 @@ export class TextsPage {
                 button.textContent = item;
                 button.classList.add("title-button-default");
                 button.onclick = () => titleButton_onclick(button);
-                this.container.appendChild(button);
+                buttonContainer.appendChild(button);
                 
                 if (selectedButton == null) titleButton_onclick(button);
             }
+
+            textBox = document.createElement("textarea");
+            textBox.classList.add("fill_remaining_space");
+            textareaContainer.appendChild(textBox);
         }
         catch (error) {
             console.error('Failed to fetch and display text:', error);
@@ -33,9 +51,6 @@ export class TextsPage {
 }
 
 function titleButton_onclick(button: HTMLButtonElement) {
-    
-    console.log("ne jebi");
-
     if (selectedButton != null) {
         selectedButton.classList.remove("title-button-selected");
         selectedButton.classList.add("title-button-default");

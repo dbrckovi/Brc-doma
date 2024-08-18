@@ -63,6 +63,5 @@ function showModule(module: string)
         textsPage.render();
         break;
     }
-    console.log(module);
   }
 }

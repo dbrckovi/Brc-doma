@@ -52,3 +52,18 @@ html, body {
   overflow: auto; /* Add scrollbars if content overflows */
   padding: 10px; /* Optional: Add padding around content */
 }
+
+.title-button-default {
+  background-color: rgb(193, 218, 233);
+  border: 1px solid #ccc;
+  padding: 3px;
+  margin-left: 3px;
+}
+
+.title-button-selected {
+  background-color: rgb(16, 127, 192);
+  color: white;
+  border: 1px solid #ccc;
+  padding: 3px;
+  margin-left: 3px;
+}

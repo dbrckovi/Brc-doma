@@ -48,24 +48,44 @@ html, body {
 }
 
 #content {
+  background-color: rgb(20, 26, 39);
   flex: 1; /* Make the content div grow to fill the remaining space */
   overflow: auto; /* Add scrollbars if content overflows */
   padding: 10px; /* Optional: Add padding around content */
 }
 
 .title-button-default {
-  background-color: rgb(193, 218, 233);
-  border: 1px solid #ccc;
+  background-color: rgb(29, 36, 53);
+  border: 1px solid rgb(45, 54, 80);
+  border-radius: 3px;
+  color: white;
+  padding: 4px;
+}
+
+.title-button-selected {
+  background-color: rgb(40, 53, 85);
+  border: 1px solid rgb(80, 89, 116);
+  border-radius: 3px;
+  color: white;
+  padding: 4px;
+}
+
+.title-button-not-saved {
+  background-color: rgb(90, 8, 19);
+  color: white;
+  border-radius: 3px;
+  border: 1px solid rgb(196, 145, 152);
   padding: 3px;
   margin-left: 3px;
 }
 
-.title-button-selected {
-  background-color: rgb(16, 127, 192);
+.editor {
+  background-color: rgb(10, 15, 24);
+  border: 1px solid rgb(80, 89, 116);
   color: white;
-  border: 1px solid #ccc;
-  padding: 3px;
-  margin-left: 3px;
+  border-radius: 3px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 16px;
 }
 
 .fill_remaining_space {
@@ -74,9 +94,6 @@ html, body {
   resize: none; /* Prevent manual resizing */
   padding: 10px;
   box-sizing: border-box; /* Include padding in the width/height calculations */
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  border: 1px solid #ccc;
 }
 
 #vertical-container {
@@ -96,4 +113,15 @@ html, body {
 #textarea-container {
   flex-grow: 1; /* Make this container fill the remaining space */
   display: flex;
+}
+
+/* New CSS for the bottom panel */
+#bottom-container {
+  display: flex;
+  /*justify-content: flex-end; /* Align items to the right */
+  padding: 6px;
+}
+
+.space-on-left {
+  margin-left: 32px;
 }

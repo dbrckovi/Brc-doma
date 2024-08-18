@@ -4,83 +4,154 @@ import { TextBlock } from "api/api";
 
 let selectedButton: HTMLButtonElement | null = null;
 let textBox: HTMLTextAreaElement | null = null;
+let btnSave: HTMLButtonElement;
+let buttonContainer: HTMLDivElement;
 
-export class TextsPage {
-    constructor(private container: HTMLElement) { }
+export class TextsPage
+{
+  constructor(private container: HTMLElement) { }
 
-    async render() {
+  async render()
+  {
 
-        const verticalContainer = document.createElement("div");
-        verticalContainer.id = "vertical-container";
-        this.container.appendChild(verticalContainer);
+    const verticalContainer = document.createElement("div");
+    verticalContainer.id = "vertical-container";
+    this.container.appendChild(verticalContainer);
 
-        const buttonContainer = document.createElement("div");
-        buttonContainer.id = "button-container";
-        verticalContainer.appendChild(buttonContainer);
+    buttonContainer = document.createElement("div");
+    buttonContainer.id = "button-container";
+    verticalContainer.appendChild(buttonContainer);
 
-        const textareaContainer = document.createElement("div");
-        textareaContainer.id = "textarea-container";
-        verticalContainer.appendChild(textareaContainer);
+    const textareaContainer = document.createElement("div");
+    textareaContainer.id = "textarea-container";
+    verticalContainer.appendChild(textareaContainer);
 
-        selectedButton = null;
-        const title = document.createElement("label");
-        title.textContent = "Texts";
-        buttonContainer.appendChild(title);
+    const bottomContainer = document.createElement("div");
+    bottomContainer.id = "bottom-container";
+    verticalContainer.appendChild(bottomContainer);
 
-        try {
-            let items: string[] = await getStringList(API_URL + "/api/TextBlock");
+    selectedButton = null;
+    const title = document.createElement("label");
+    title.textContent = "Texts";
+    buttonContainer.appendChild(title);
 
-            for (const item of items) {
-                const button = document.createElement('button');
-                button.id = "text_title_button_" + item;
-                button.textContent = item;
-                button.classList.add("title-button-default");
-                button.onclick = () => titleButton_onclick(button);
-                buttonContainer.appendChild(button);
-                
-                if (selectedButton == null) titleButton_onclick(button);
-            }
+    try
+    {
+      let items: string[] = await getStringList(API_URL + "/api/TextBlock");
 
-            const btnSave = document.createElement('button');
-            btnSave.onclick = () => SaveCurrentTextBlock();
-            buttonContainer.appendChild(btnSave);
-           
-            textBox = document.createElement("textarea");
-            textBox.classList.add("fill_remaining_space");
-            textareaContainer.appendChild(textBox);
-        }
-        catch (error) {
-            console.error('Failed to fetch and display text:', error);
-        }
+      for (const item of items)
+      {
+        const button = makeTitleButton(buttonContainer, item);
+        if (selectedButton == null) titleButton_onclick(button);
+      }
+
+      btnSave = document.createElement('button');
+      btnSave.classList.add("title-button-default");
+      btnSave.textContent = "Save";
+      btnSave.onclick = () => SaveCurrentTextBlock();
+      bottomContainer.appendChild(btnSave);
+
+      const btnNew = document.createElement("button");
+      btnNew.classList.add("title-button-default");
+      btnNew.classList.add("space-on-left");
+      btnNew.textContent = "New";
+      btnNew.onclick = () => NewTextItemClicked();
+      bottomContainer.appendChild(btnNew);
+
+      textBox = document.createElement("textarea");
+      textBox.classList.add("fill_remaining_space", "editor");
+      textBox.oninput = () => TextChanged();
+      textareaContainer.appendChild(textBox);
     }
+    catch (error)
+    {
+      console.error('Failed to fetch and display text:', error);
+    }
+  }
 }
 
-function titleButton_onclick(button: HTMLButtonElement) {
-    if (selectedButton != null) {
-        selectedButton.classList.remove("title-button-selected");
-        selectedButton.classList.add("title-button-default");
-    }
-    selectedButton = button;
-    selectedButton.classList.remove("title-button-default");
-    selectedButton.classList.add("title-button-selected");
+function makeTitleButton(container: HTMLDivElement, item: string): HTMLButtonElement
+{
+  const button = document.createElement('button');
+  button.id = "text_title_button_" + item;
+  button.textContent = item;
+  button.classList.add("title-button-default");
+  button.onclick = () => titleButton_onclick(button);
+  container.appendChild(button);
+  return button;
+}
 
-    LoadCurrentTextBlock();
+function titleButton_onclick(button: HTMLButtonElement)
+{
+  if (selectedButton != null)
+  {
+    selectedButton.classList.remove("title-button-selected");
+    selectedButton.classList.add("title-button-default");
+  }
+  selectedButton = button;
+  selectedButton.classList.remove("title-button-default");
+  selectedButton.classList.add("title-button-selected");
+
+  LoadCurrentTextBlock();
 }
 
 //Loads text of the selected TextBlock
-async function LoadCurrentTextBlock(){
-    if (selectedButton != null) {
-        let textBlock:TextBlock | null = await getTextBlock(API_URL + "/api/TextBlock/" + selectedButton.textContent);
-        if (textBlock != null && textBox != null) textBox.value = textBlock.text;
-    }
+async function LoadCurrentTextBlock()
+{
+  if (selectedButton != null)
+  {
+    let textBlock: TextBlock | null = await getTextBlock(API_URL + "/api/TextBlock/" + selectedButton.textContent);
+    if (textBlock != null && textBox != null) textBox.value = textBlock.text;
+    btnSave.classList.remove("title-button-not-saved");
+    btnSave.classList.add("title-button-default");
+  }
 }
 
 //Saves text of the selected TextBlock
-async function SaveCurrentTextBlock() {
-    if (selectedButton != null && selectedButton.textContent != null && textBox != null)
+async function SaveCurrentTextBlock()
+{
+  if (selectedButton != null && selectedButton.textContent != null && textBox != null)
+  {
+    let textBlock: TextBlock = { id: selectedButton.textContent, text: textBox.value };
+    let url: string = API_URL + "/api/TextBlock";
+    await postTextBlock(url, textBlock);
+    btnSave.classList.remove("title-button-not-saved");
+    btnSave.classList.add("title-button-default");
+  }
+}
+
+async function TextChanged()
+{
+  btnSave.classList.remove("title-button-default");
+  btnSave.classList.add("title-button-not-saved");
+}
+
+async function NewTextItemClicked()
+{
+  const userInput = prompt("Enter name of new text item");
+
+  if (userInput !== null)
+  {
+    try
     {
-        let textBlock: TextBlock = { id: selectedButton.textContent, text: textBox.value };
-        let url: string = API_URL + "/api/TextBlock";
-        await postTextBlock(url, textBlock);
-    }    
+      if (userInput.length == 0) throw "Invalid input";
+      let items: string[] = await getStringList(API_URL + "/api/TextBlock");
+      for (const item of items)
+      {
+        if (item == userInput) throw "Item already esists";
+      }
+
+      let textBlock: TextBlock = { id: userInput, text: "" };
+      let url: string = API_URL + "/api/TextBlock";
+      await postTextBlock(url, textBlock);
+      
+      const button = makeTitleButton(buttonContainer, userInput);
+      titleButton_onclick(button);
+    }
+    catch (error)
+    {
+      alert(error);
+    }
+
+  }
 }

@@ -1,5 +1,6 @@
 import { API_URL } from "global";
-import { getStringList, makeGetRequest } from "api/api";
+import { getStringList, getTextBlock, makeGetRequest, postTextBlock } from "api/api";
+import { TextBlock } from "api/api";
 
 let selectedButton: HTMLButtonElement | null = null;
 let textBox: HTMLTextAreaElement | null = null;
@@ -40,6 +41,10 @@ export class TextsPage {
                 if (selectedButton == null) titleButton_onclick(button);
             }
 
+            const btnSave = document.createElement('button');
+            btnSave.onclick = () => SaveCurrentTextBlock();
+            buttonContainer.appendChild(btnSave);
+           
             textBox = document.createElement("textarea");
             textBox.classList.add("fill_remaining_space");
             textareaContainer.appendChild(textBox);
@@ -58,4 +63,24 @@ function titleButton_onclick(button: HTMLButtonElement) {
     selectedButton = button;
     selectedButton.classList.remove("title-button-default");
     selectedButton.classList.add("title-button-selected");
+
+    LoadCurrentTextBlock();
+}
+
+//Loads text of the selected TextBlock
+async function LoadCurrentTextBlock(){
+    if (selectedButton != null) {
+        let textBlock:TextBlock | null = await getTextBlock(API_URL + "/api/TextBlock/" + selectedButton.textContent);
+        if (textBlock != null && textBox != null) textBox.value = textBlock.text;
+    }
+}
+
+//Saves text of the selected TextBlock
+async function SaveCurrentTextBlock() {
+    if (selectedButton != null && selectedButton.textContent != null && textBox != null)
+    {
+        let textBlock: TextBlock = { id: selectedButton.textContent, text: textBox.value };
+        let url: string = API_URL + "/api/TextBlock";
+        await postTextBlock(url, textBlock);
+    }    
 }

@@ -1,6 +1,8 @@
 import { API_URL } from "global";
-import { getStringList, getTextBlock, makeGetRequest, postTextBlock } from "api/api";
+import { deleteTextBlock, getStringList, getTextBlock, makeRequest, postTextBlock } from "api/api";
 import { TextBlock } from "api/api";
+import { showModule } from "pages/home-page";
+import { PAGE_ID_TEXTS } from "global";
 
 let selectedButton: HTMLButtonElement | null = null;
 let textBox: HTMLTextAreaElement | null = null;
@@ -13,7 +15,6 @@ export class TextsPage
 
   async render()
   {
-
     const verticalContainer = document.createElement("div");
     verticalContainer.id = "vertical-container";
     this.container.appendChild(verticalContainer);
@@ -58,6 +59,13 @@ export class TextsPage
       btnNew.onclick = () => NewTextItemClicked();
       bottomContainer.appendChild(btnNew);
 
+      const btnDelete = document.createElement("button");
+      btnDelete.classList.add("title-button-default");
+      btnDelete.classList.add("space-on-left");
+      btnDelete.textContent = "Delete";
+      btnDelete.onclick = () => DeleteTextItemClicked();
+      bottomContainer.appendChild(btnDelete);
+
       textBox = document.createElement("textarea");
       textBox.classList.add("fill_remaining_space", "editor");
       textBox.oninput = () => TextChanged();
@@ -80,6 +88,14 @@ function makeTitleButton(container: HTMLDivElement, item: string): HTMLButtonEle
   container.appendChild(button);
   return button;
 }
+
+function deleteTitleButton(container: HTMLDivElement, button: HTMLButtonElement)
+{
+  container.removeChild(button);
+  if (selectedButton == button) selectedButton = null;
+  LoadCurrentTextBlock();
+}
+
 
 function titleButton_onclick(button: HTMLButtonElement)
 {
@@ -104,6 +120,10 @@ async function LoadCurrentTextBlock()
     if (textBlock != null && textBox != null) textBox.value = textBlock.text;
     btnSave.classList.remove("title-button-not-saved");
     btnSave.classList.add("title-button-default");
+  }
+  else
+  {
+    if (textBox != null) textBox.value = "";
   }
 }
 
@@ -144,7 +164,7 @@ async function NewTextItemClicked()
       let textBlock: TextBlock = { id: userInput, text: "" };
       let url: string = API_URL + "/api/TextBlock";
       await postTextBlock(url, textBlock);
-      
+
       const button = makeTitleButton(buttonContainer, userInput);
       titleButton_onclick(button);
     }
@@ -152,6 +172,18 @@ async function NewTextItemClicked()
     {
       alert(error);
     }
+  }
+}
 
+async function DeleteTextItemClicked()
+{
+  if (selectedButton != null && selectedButton.textContent != null)
+  {
+    const dialogResult = confirm("Do you want to elete '" + selectedButton.textContent + "'?");
+    if (dialogResult)
+    {
+      await deleteTextBlock(API_URL + "/api/TextBlock", selectedButton.textContent);
+      showModule(PAGE_ID_TEXTS);
+    }
   }
 }

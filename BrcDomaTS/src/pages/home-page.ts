@@ -26,7 +26,7 @@ function createMainMenu()
     const mainMenu = new MainMenu(mainMenuContainer, mainMenu_ModuleChanged);
     mainMenu.render();
 
-    mainMenu_ModuleChanged('lists');
+    mainMenu_ModuleChanged(PAGE_ID_TEXTS);
   }
 }
 
@@ -46,7 +46,7 @@ function mainMenu_ModuleChanged(module: string)
   showModule(module);
 }
 
-function showModule(module: string)
+export function showModule(module: string)
 {
   const contentContainer = document.getElementById('content');
   if (contentContainer)

@@ -71,12 +71,13 @@ html, body {
 }
 
 .title-button-not-saved {
-  background-color: rgb(90, 8, 19);
+  background-color: rgb(117, 10, 24);
   color: white;
   border-radius: 3px;
   border: 1px solid rgb(196, 145, 152);
   padding: 3px;
   margin-left: 3px;
+  font-weight: bolder;
 }
 
 .editor {

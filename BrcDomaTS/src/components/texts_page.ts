@@ -38,7 +38,7 @@ export class TextsPage
 
     try
     {
-      let items: string[] = await getStringList(API_URL + "/api/TextBlock");
+      let items: string[] = await getStringList(API_URL + "/TextBlock");
 
       for (const item of items)
       {
@@ -116,7 +116,7 @@ async function LoadCurrentTextBlock()
 {
   if (selectedButton != null)
   {
-    let textBlock: TextBlock | null = await getTextBlock(API_URL + "/api/TextBlock/" + selectedButton.textContent);
+    let textBlock: TextBlock | null = await getTextBlock(API_URL + "/TextBlock/" + selectedButton.textContent);
     if (textBlock != null && textBox != null) textBox.value = textBlock.text;
     btnSave.classList.remove("title-button-not-saved");
     btnSave.classList.add("title-button-default");
@@ -133,7 +133,7 @@ async function SaveCurrentTextBlock()
   if (selectedButton != null && selectedButton.textContent != null && textBox != null)
   {
     let textBlock: TextBlock = { id: selectedButton.textContent, text: textBox.value };
-    let url: string = API_URL + "/api/TextBlock";
+    let url: string = API_URL + "/TextBlock";
     await postTextBlock(url, textBlock);
     btnSave.classList.remove("title-button-not-saved");
     btnSave.classList.add("title-button-default");
@@ -155,14 +155,14 @@ async function NewTextItemClicked()
     try
     {
       if (userInput.length == 0) throw "Invalid input";
-      let items: string[] = await getStringList(API_URL + "/api/TextBlock");
+      let items: string[] = await getStringList(API_URL + "/TextBlock");
       for (const item of items)
       {
         if (item == userInput) throw "Item already esists";
       }
 
       let textBlock: TextBlock = { id: userInput, text: "" };
-      let url: string = API_URL + "/api/TextBlock";
+      let url: string = API_URL + "/TextBlock";
       await postTextBlock(url, textBlock);
 
       const button = makeTitleButton(buttonContainer, userInput);
@@ -182,7 +182,7 @@ async function DeleteTextItemClicked()
     const dialogResult = confirm("Do you want to elete '" + selectedButton.textContent + "'?");
     if (dialogResult)
     {
-      await deleteTextBlock(API_URL + "/api/TextBlock", selectedButton.textContent);
+      await deleteTextBlock(API_URL + "/TextBlock", selectedButton.textContent);
       showModule(PAGE_ID_TEXTS);
     }
   }

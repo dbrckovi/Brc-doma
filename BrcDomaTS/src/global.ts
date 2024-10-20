@@ -1,6 +1,6 @@
 export const version = process.env.VERSION as string
 export const mode = process.env.MODE as 'development' | 'production'
-export const API_URL: string = 'http://brc-doma.duckdns.org:81';
+export const API_URL: string = 'http://brc-doma.duckdns.org/api';
 
 export const PAGE_ID_LISTS = 'lists';
 export const PAGE_ID_TEXTS = 'texts';
